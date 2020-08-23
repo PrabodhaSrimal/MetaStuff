@@ -1,4 +1,3 @@
-*.txt
 *.obj
 *.XML
 *.user
@@ -26,6 +25,7 @@
 _UpgradeReport_Files/
 Debug/
 Release/
+build/
 ipch/
 .debug_time
 nano

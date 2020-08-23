@@ -35,4 +35,5 @@ example/CMakeCache.txt
 example/Makefile
 example/meta_example
 example/MetaExample/
+example/build/
 *.cmake

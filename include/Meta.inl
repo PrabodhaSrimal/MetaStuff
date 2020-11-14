@@ -45,7 +45,7 @@ constexpr auto getName()
 template <typename Class>
 constexpr std::size_t getMemberCount()
 {
-	return std::tuple_size<decltype(registerMembers<Class>())>::value;
+    return std::tuple_size_v<decltype(registerMembers<Class>())>;
 }
 
 template <typename Class>
@@ -57,14 +57,14 @@ const auto& getMembers()
 template <typename Class>
 constexpr bool isRegistered()
 {
-    return !std::is_same<std::tuple<>, decltype(registerMembers<Class>())>::value;
+    return !std::is_same_v<std::tuple<>, decltype(registerMembers<Class>())>;
 }
 
 // Check if Class has non-default ctor registered
 template <typename Class>
 constexpr bool ctorRegistered()
 {
-    return !std::is_same<type_list<>, constructor_arguments<Class>>::value;
+    return !std::is_same_v<type_list<>, constructor_arguments<Class>>;
 }
 
 template <typename Class>
@@ -104,8 +104,10 @@ void doForMember(const char* name, F&& f)
         {
             if (!strcmp(name, member.getName())) {
                 using MemberT = meta::get_member_type<decltype(member)>;
-                assert((std::is_same<MemberT, T>::value) && "Member doesn't have type T");
-                detail::call_if<std::is_same<MemberT, T>::value>(std::forward<F>(f), member);
+                assert((std::is_same_v<MemberT, T>) && "Member doesn't have type T");
+                if constexpr (std::is_same_v<MemberT, T>) {
+                    f(member);
+                }
             }
         }
     );

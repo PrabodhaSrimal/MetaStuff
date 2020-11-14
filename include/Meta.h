@@ -124,7 +124,7 @@ T getMemberValue(Class& obj, const char* name);
 
 // Set value of the member named 'name'
 template <typename T, typename Class, typename V,
-    typename = std::enable_if_t<std::is_constructible<T, V>::value>>
+    typename = std::enable_if_t<std::is_constructible_v<T, V>>>
 void setMemberValue(Class& obj, const char* name, V&& value);
 
 }

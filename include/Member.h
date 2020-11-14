@@ -63,7 +63,7 @@ public:
     member_ptr_t<Class, T> getPtr() const;
 
     template <typename V,
-        typename = std::enable_if_t<std::is_constructible<T, V>::value>>
+        typename = std::enable_if_t<std::is_constructible_v<T, V>>>
         void set(Class& obj, V&& value) const; // accepts lvalues and rvalues!
 
     const char* getName() const { return name; }

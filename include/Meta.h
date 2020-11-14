@@ -39,6 +39,7 @@ auto registerMembers<YourClass>()
 #include <type_traits>
 #include <tuple>
 #include <utility>
+#include <optional>
 
 // type_list is array of types
 template <typename... Args>
@@ -54,14 +55,14 @@ namespace meta
 {
 
 template <typename... Args>
-auto members(Args&&... args);
+constexpr auto members(Args&&... args);
 
 template <typename Tuple, typename... Args>
 auto membersConcat(Tuple&& tuple, Args&&... args);
 
 // function used for registration of classes by user
 template <typename Class>
-inline auto registerMembers();
+inline constexpr auto registerMembers();
 
 // function used for registration of class name by user
 template <typename Class>
@@ -77,7 +78,7 @@ constexpr std::size_t getMemberCount();
 
 // returns std::tuple of Members
 template <typename Class>
-const auto& getMembers();
+constexpr const auto& getMembers();
 
 // Check if class has registerMembers<T> specialization (has been registered)
 template <typename Class>
@@ -126,6 +127,14 @@ T getMemberValue(Class& obj, const char* name);
 template <typename T, typename Class, typename V,
     typename = std::enable_if_t<std::is_constructible_v<T, V>>>
 void setMemberValue(Class& obj, const char* name, V&& value);
+
+//////////////////// SOME HELPERS
+
+template <typename T>
+struct is_optional : std::false_type {};
+
+template <typename T>
+struct is_optional< std::optional<T> > : std::true_type {};
 
 }
 

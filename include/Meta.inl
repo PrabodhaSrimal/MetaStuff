@@ -10,7 +10,7 @@ namespace meta
 {
 
 template <typename... Args>
-auto members(Args&&... args)
+constexpr auto members(Args&&... args)
 {
     // just this... but may become more complex later, who knows!
     //  Still, better no to expose too much to end-user.
@@ -25,7 +25,7 @@ auto membersConcat(Tuple&& tuple, Args&&... args)
 }
 
 template <typename Class>
-inline auto registerMembers()
+inline constexpr auto registerMembers()
 {
     return std::make_tuple();
 }
@@ -49,7 +49,7 @@ constexpr std::size_t getMemberCount()
 }
 
 template <typename Class>
-const auto& getMembers()
+constexpr const auto& getMembers()
 {
     return detail::MetaHolder<Class, decltype(registerMembers<Class>())>::members;
 }
